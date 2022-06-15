@@ -12,3 +12,9 @@ def index(request):
     context['email'] = qs_email
 
     return render(request, 'index.html', context)
+
+
+def description_contact(request, pk):
+    obj = Contact.objects.get(pk=pk)
+
+    return render(request, 'info_about_contact.html', {'contact': obj})
