@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Contact, Phone, Email
 
@@ -15,6 +16,9 @@ def index(request):
 
 
 def description_contact(request, pk):
-    obj = Contact.objects.get(pk=pk)
+    try:
+        obj = Contact.objects.get(pk=pk)
+    except:
+        return HttpResponse('Введен неверный порядковый номер контакта.')
 
     return render(request, 'info_about_contact.html', {'contact': obj})
