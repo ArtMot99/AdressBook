@@ -7,7 +7,7 @@ class Contact(models.Model):
     surname = models.CharField(max_length=20, verbose_name='Фамилия')
     patronymic = models.CharField(max_length=20, verbose_name='Отчество')
     old = models.PositiveIntegerField(verbose_name='Возраст')
-    user = models.ForeignKey(get_user_model, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     class Meta:
         pass
