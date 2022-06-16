@@ -21,7 +21,7 @@ class Phone(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.phone_number
+        return f'Phone: {self.phone_number} | Name: {self.contact}'
 
 
 class Email(models.Model):
@@ -29,4 +29,4 @@ class Email(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.email_address
+        return f'Email: {self.email_address} | Name: {self.contact}'
