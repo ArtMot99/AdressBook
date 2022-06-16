@@ -5,12 +5,12 @@
     <title>Adress Book</title>
 </head>
 <body>
-    <h1>Address info</h1>
+    <h1>Address Book</h1>
     {% for person in contact %}
-    <h3><a href="{% url 'info' pk=person.id%}">Contact {{ person.id }}</a></h3>
+    <h3>Contact {{ person.id }}</h3>
         <p><tt>Name:</tt> <em>{{ person.name }}</em></p>
         <p><tt>Surname:</tt> <em>{{ person.surname }}</em></p>
-        <p><tt>User:</tt> <em>{{ person.user }}</em></p>
+        <p><a href="{% url 'info' pk=person.id%}"><b>--> show more info <--</b></a></p>
     {% endfor %}
 </body>
 </html>
