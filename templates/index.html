@@ -7,12 +7,10 @@
 <body>
     <h1>Address info</h1>
     <p>{% for person in contact %}</p>
-    <h3>Contact</h3>
-        <p><tt>User:</tt> <em>{{ person.user }}</em></p>
+    <h3><a href="{% url 'info' pk=person.id%}">Contact {{ person.id }}</a></h3>
         <p><tt>Name:</tt> <em>{{ person.name }}</em></p>
         <p><tt>Surname:</tt> <em>{{ person.surname }}</em></p>
-        <p><tt>Patronymic:</tt> <em>{{ person.patronymic }}</em></p>
-        <p><tt>Old:</tt> <em>{{ person.old }}</em> <tt>yo</tt></p>
+        <p><tt>User:</tt> <em>{{ person.user }}</em></p>
     <p>{% endfor %}</p>
 </body>
 </html>
