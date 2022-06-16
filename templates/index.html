@@ -6,11 +6,11 @@
 </head>
 <body>
     <h1>Address info</h1>
-    <p>{% for person in contact %}</p>
+    {% for person in contact %}
     <h3><a href="{% url 'info' pk=person.id%}">Contact {{ person.id }}</a></h3>
         <p><tt>Name:</tt> <em>{{ person.name }}</em></p>
         <p><tt>Surname:</tt> <em>{{ person.surname }}</em></p>
         <p><tt>User:</tt> <em>{{ person.user }}</em></p>
-    <p>{% endfor %}</p>
+    {% endfor %}
 </body>
 </html>
