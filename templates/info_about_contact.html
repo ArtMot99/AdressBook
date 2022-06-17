@@ -12,15 +12,11 @@
         <p><tt>Surname:</tt> <em>{{ contact.surname }}</em></p>
         <p><tt>Patronymic:</tt> <em>{{ contact.patronymic }}</em></p>
         <p><tt>Old:</tt> <em>{{ contact.old }}</em> <tt>yo</tt></p>
-        {% for number in phone %}
-                {% if number.contact_id == contact.id %}
-                    <p><tt>Phone number:</tt> <em>{{ number.phone_number }}</em></p>
-                {% endif %}
+        {% for phone_number in contact.phone_set.all %}
+            <p><tt>Phone number:</tt> <em>{{ phone_number.phone_number }}</em></p>
         {% endfor %}
-        {% for mail in email %}
-                {% if mail.contact_id == contact.id %}
-                    <p><tt>Email address:</tt> {{ mail.email_address }}</p>
-                {% endif %}
+        {% for email_address in contact.email_set.all %}
+            <p><tt>Email address:</tt> {{ email_address.email_address }}</p>
         {% endfor %}
 </body>
 </html>
