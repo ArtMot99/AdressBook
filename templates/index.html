@@ -10,7 +10,7 @@
     <h3>Contact {{ person.id }}</h3>
         <p><tt>Name:</tt> <em>{{ person.name }}</em></p>
         <p><tt>Surname:</tt> <em>{{ person.surname }}</em></p>
-        <p><a href="{% url 'info' pk=person.id%}"><b>--> show more info <--</b></a></p>
+        <p><a href="{% url 'info' pk=person.pk %}"><b>--> show more info <--</b></a></p>
     {% endfor %}
 </body>
 </html>

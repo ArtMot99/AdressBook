@@ -2,14 +2,14 @@ from django.shortcuts import render, get_object_or_404
 from .models import Contact, Phone, Email
 
 
-def index(request):
+def all_contacts_view(request):
     context = {}
     qs_contact = Contact.objects.all()
     context['contact'] = qs_contact
     return render(request, 'index.html', context)
 
 
-def description_contact(request, pk):
+def one_contact_view(request, pk):
     context = {}
     obj = get_object_or_404(Contact, pk=pk)
     context['contact'] = obj
