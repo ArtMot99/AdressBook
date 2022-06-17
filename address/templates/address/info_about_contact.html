@@ -12,7 +12,7 @@
         <p><tt>Surname:</tt> <em>{{ contact.surname }}</em></p>
         <p><tt>Patronymic:</tt> <em>{{ contact.patronymic }}</em></p>
         <p><tt>Old:</tt> <em>{{ contact.old }}</em> <tt>yo</tt></p>
-        <p><tt>Phone number:</tt> {{ phone_numbers|default:'Nothing' }}</p>
-        <p><tt>Email address:</tt> {{ emails|default:'Nothing' }}</p>
+        <p><tt>Phone number:</tt> {{ phone_numbers|join:',  '|default:'Nothing' }}</p>
+        <p><tt>Email address:</tt> {{ emails|join:',  '|default:'Nothing' }}</p>
 </body>
 </html>
