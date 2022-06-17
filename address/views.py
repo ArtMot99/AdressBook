@@ -11,12 +11,8 @@ def contact_list_view(request):
 
 def contact_view(request, pk):
     obj = get_object_or_404(Contact, pk=pk)
-    phone_numbers = []
-    emails_address = []
-    for number in obj.phone_set.all():
-        phone_numbers.append(number.phone_number)
-    for email in obj.email_set.all():
-        emails_address.append(email.email_address)
+    phone_numbers = [number.phone_number for number in obj.phone_set.all()]
+    emails_address = [email.email_address for email in obj.email_set.all()]
     context = {
         'contact': obj,
         'phone_numbers': phone_numbers,
