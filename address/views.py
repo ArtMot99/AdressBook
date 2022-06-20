@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .forms import CreateContact
-from .models import Contact
+from .models import Contact, Phone, Email
 
 
 def contact_list_view(request):
@@ -30,7 +30,11 @@ def create_contact_view(request):
     if request.method == 'POST':
         form = CreateContact(request.POST)
         if form.is_valid():
-            contact = Contact(**form.cleaned_data)
+            name = form.cleaned_data['name']
+            surname = form.cleaned_data['surname']
+            patronymic = form.cleaned_data['patronymic']
+            old = form.cleaned_data['old']
+            contact = Contact(name=name, surname=surname, patronymic=patronymic, old=old)
             contact.user = request.user
             contact.save()
             return HttpResponseRedirect(reverse('main_menu'))
