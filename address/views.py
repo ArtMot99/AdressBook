@@ -1,9 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-
-from .forms import CreateContact
-from .models import Contact, Phone, Email
+from .forms import CreateContactModelForm
+from .models import Contact
 
 
 def contact_list_view(request):
@@ -26,20 +25,17 @@ def contact_view(request, pk):
     return render(request, 'address/info_about_contact.html', context)
 
 
-def create_contact_view(request):
+def create_contact_modelform_view(request, *args, **kwargs):
     if request.method == 'POST':
-        form = CreateContact(request.POST)
+        form = CreateContactModelForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            surname = form.cleaned_data['surname']
-            patronymic = form.cleaned_data['patronymic']
-            old = form.cleaned_data['old']
-            contact = Contact(name=name, surname=surname, patronymic=patronymic, old=old)
+            contact = form.save(commit=False)
             contact.user = request.user
             contact.save()
             return HttpResponseRedirect(reverse('main_menu'))
         else:
             return render(request, 'address/create_contact.html', context={'form': form})
     else:
-        form = CreateContact()
+        form = CreateContactModelForm()
     return render(request, 'address/create_contact.html', context={'form': form})
+

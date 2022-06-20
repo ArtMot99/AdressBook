@@ -1,10 +1,9 @@
 from django import forms
+from .models import Contact, Phone, Email
 
 
-class CreateContact(forms.Form):
-    name = forms.CharField(required=True, max_length=15, min_length=3, label='Имя')
-    surname = forms.CharField(required=True, max_length=15, min_length=3, label='Фамилия')
-    patronymic = forms.CharField(required=True, max_length=15, min_length=3, label='Отчество')
-    old = forms.IntegerField(required=True, label='Возраст')
-    phone = forms.IntegerField(label='Номер телефона')
-    email = forms.EmailField(max_length=30)
+class CreateContactModelForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['name', 'surname', 'patronymic', 'old']
+
