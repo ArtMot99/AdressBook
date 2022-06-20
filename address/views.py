@@ -1,5 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from .models import Contact, Phone, Email
+from django.urls import reverse
+
+from .forms import CreateContact
+from .models import Contact
 
 
 def contact_list_view(request):
@@ -22,5 +26,16 @@ def contact_view(request, pk):
     return render(request, 'address/info_about_contact.html', context)
 
 
-def create_contact(request):
-    return render(request, 'address/create_contact.html')
+def create_contact_view(request):
+    if request.method == 'POST':
+        form = CreateContact(request.POST)
+        if form.is_valid():
+            contact = Contact(**form.cleaned_data)
+            contact.user = request.user
+            contact.save()
+            return HttpResponseRedirect(reverse('main_menu'))
+        else:
+            return render(request, 'address/create_contact.html', context={'form': form})
+    else:
+        form = CreateContact()
+    return render(request, 'address/create_contact.html', context={'form': form})
