@@ -20,3 +20,7 @@ def contact_view(request, pk):
     }
 
     return render(request, 'address/info_about_contact.html', context)
+
+
+def create_contact(request):
+    return render(request, 'address/create_contact.html')
