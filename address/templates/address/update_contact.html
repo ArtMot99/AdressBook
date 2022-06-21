@@ -9,12 +9,5 @@
 {% block content %}
     {% include 'includes/navbar.html' %}
     <h1>Обновите выбраный контакт</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ phone_form.as_p }}
-        {{ email_form.as_p }}
-
-        <button type="submit">Update contact</button>
-    </form>
+    {% include 'includes/form_for_create_and_update.html' %}
 {% endblock %}
