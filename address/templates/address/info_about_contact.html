@@ -7,14 +7,20 @@
 
 
 {% block content %}
-    <h2>Contact number {{ contact.id }}</h2>
+
+    <h2>Contact name</h2>
     <hr size="1">
         <p><tt>User:</tt> <em>{{ contact.user }}</em></p>
         <p><tt>Name:</tt> <em>{{ contact.name }}</em></p>
         <p><tt>Surname:</tt> <em>{{ contact.surname }}</em></p>
         <p><tt>Patronymic:</tt> <em>{{ contact.patronymic }}</em></p>
         <p><tt>Old:</tt> <em>{{ contact.old }}</em> <tt>yo</tt></p>
-        <p><tt>Phone number:</tt> {{ contact.phone_set.all|join:',  '|default:'Nothing' }}</p>
-        <p><tt>Email address:</tt> {{ contact.email_set.all|join:',  '|default:'Nothing' }}</p>
+        <p>{{ contact.phone_set.all|join:',  '|default:'Nothing' }}</p>
+        <p>{{ contact.email_set.all|join:',  '|default:'Nothing' }}</p>
         <button type="submit"><a href="{% url 'update' pk=contact.pk %}">Update contact</a></button>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit">Delete contact</button>
+        </form>
+
 {% endblock %}

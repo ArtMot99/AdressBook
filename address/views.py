@@ -17,8 +17,11 @@ def contact_view(request, pk):
     context = {
         'contact': obj,
     }
-
-    return render(request, 'address/info_about_contact.html', context)
+    if request.method == 'POST':
+        obj.delete()
+        return HttpResponseRedirect(reverse('main_menu'))
+    else:
+        return render(request, 'address/info_about_contact.html', context)
 
 
 def create_contact_modelform_view(request, *args, **kwargs):
