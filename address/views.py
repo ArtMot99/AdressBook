@@ -60,12 +60,12 @@ def update_contact_modelform_view(request, pk, *args, **kwargs):
             phone = phone_form.save()
             return HttpResponseRedirect(reverse('info', kwargs={'pk': pk}))
         else:
-            return render(request, 'address/create_contact.html', context={'form': form,
+            return render(request, 'address/update_contact.html', context={'form': form,
                                                                            'phone_form': phone_form})
     else:
         form = CreateContactModelForm(instance=obj)
         phone_form = PhoneForm(instance=obj.phone_set.first())
-    return render(request, 'address/create_contact.html', context={'form': form,
+    return render(request, 'address/update_contact.html', context={'form': form,
                                                                    'phone_form': phone_form})
 
 
