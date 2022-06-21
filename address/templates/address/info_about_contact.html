@@ -16,4 +16,5 @@
         <p><tt>Old:</tt> <em>{{ contact.old }}</em> <tt>yo</tt></p>
         <p><tt>Phone number:</tt> {{ contact.phone_set.all|join:',  '|default:'Nothing' }}</p>
         <p><tt>Email address:</tt> {{ contact.email_set.all|join:',  '|default:'Nothing' }}</p>
+        <button type="submit"><a href="{% url 'update' pk=contact.pk %}">Update contact</a></button>
 {% endblock %}
