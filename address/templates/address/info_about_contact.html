@@ -9,25 +9,27 @@
 {% block content %}
     {% include 'includes/navbar.html' %}
 
-    <div class="">
-        <h2>Описание контакта</h2>
-        <p>User: <em>{{ contact.user }}</em></p>
-        <p>Name: <em>{{ contact.name }}</em></p>
-        <p>Surname: <em>{{ contact.surname }}</em></p>
-        <p>Patronymic: <em>{{ contact.patronymic }}</em></p>
-        <p>Old: <em>{{ contact.old }}</em> <tt>yo</tt></p>
-        <p>{{ contact.phone_set.all|join:',  '|default:'Nothing' }}</p>
-        <p>{{ contact.email_set.all|join:',  '|default:'Nothing' }}</p>
+    <div class="card bg-info mb-3 bg-opacity-25 text-center">
+        <div class="card-header">Описание контакта</div>
+        <div class="card-body">
+            <p class="card-text"><span class="text-success text-decoration-underline">User:</span> {{ contact.user }}</p>
+            <p class="card-text"><span class="text-success text-decoration-underline">Name:</span> {{ contact.name }}</p>
+            <p class="card-text"><span class="text-success text-decoration-underline">Surname:</span> {{ contact.surname }}</p>
+            <p class="card-text"><span class="text-success text-decoration-underline">Patronymic:</span> {{ contact.patronymic }}</p>
+            <p class="card-text"><span class="text-success text-decoration-underline">Old:</span> {{ contact.old }} yo</p>
+            <p class="card-text">{{ contact.phone_set.all|join:',  '|default:'Nothing' }}</p>
+            <p class="card-text">{{ contact.email_set.all|join:',  '|default:'Nothing' }}</p>
+        </div>
     </div>
 
     <div>
-        <button type="submit"><a href="{% url 'update' pk=contact.pk %}">Update contact</a></button>
+        <a class="btn mb-3 btn-success btn-sm" role="button" style="width: 9rem" href="{% url 'update' pk=contact.pk %}">Update contact</a>
     </div>
 
     <div>
         <form action="" method="post">
             {% csrf_token %}
-            <button class="btn btn-danger" type="submit">Delete contact</button>
+            <button class="btn btn-danger btn-sm" type="submit" style="width: 9rem">Delete contact</button>
         </form>
     </div>
 

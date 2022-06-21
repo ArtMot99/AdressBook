@@ -11,7 +11,7 @@
     {% for person in contact %}
         <div class="list-group">
             <a href="{% url 'info' pk=person.pk %}"
-               class="list-group-item list-group-item-secondary bg-info bg-opacity-25">
+               class="list-group-item list-group-item-secondary shadow bg-secondary m-1 bg-opacity-25">
                 {{ person.name.title }} {{ person.surname.title }}
             </a>
         </div>
