@@ -1,8 +1,14 @@
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {{ phone_form.as_p }}
-    {{ email_form.as_p }}
+<div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6 text-center">
+                <form class="form-text" action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {{ phone_form.as_p }}
+                    {{ email_form.as_p }}
 
-    <button type="submit">Create Contact</button>
-</form>
+                    <button class="btn btn-success" type="submit">Create Contact</button>
+                </form>
+            </div>
+        </div>
+</div>
