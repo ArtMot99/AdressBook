@@ -7,8 +7,8 @@
 
 
 {% block content %}
-    <h1>Создайте новый контакт</h1>
     {% include 'includes/navbar.html' %}
+    <h1>Создайте новый контакт</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}

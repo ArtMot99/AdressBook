@@ -7,8 +7,8 @@
 
 
 {% block content %}
-    <h1>Address Book</h1>
     {% include 'includes/navbar.html' %}
+    <h1>Address Book</h1>
     {% for person in contact %}
     <h3>Contact info</h3>
         <p><tt>Name:</tt> <em>{{ person.name }}</em></p>
