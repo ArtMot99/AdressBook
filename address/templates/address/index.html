@@ -8,11 +8,11 @@
 
 {% block content %}
     {% include 'includes/navbar.html' %}
-    <h1>Address Book</h1>
     {% for person in contact %}
-    <h3>Contact info</h3>
-        <p><tt>Name:</tt> <em>{{ person.name }}</em></p>
-        <p><tt>Surname:</tt> <em>{{ person.surname }}</em></p>
-        <p><a href="{% url 'info' pk=person.pk %}"><b>--> show more info <--</b></a></p>
+        <div class="list-group">
+            <a href="{% url 'info' pk=person.pk %}" class="list-group-item list-group-item-secondary">
+                {{ person.name.title }} {{ person.surname.title }}
+            </a>
+        </div>
     {% endfor %}
 {% endblock %}
