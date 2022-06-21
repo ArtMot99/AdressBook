@@ -55,17 +55,22 @@ def update_contact_modelform_view(request, pk, *args, **kwargs):
     if request.method == 'POST':
         form = CreateContactModelForm(data=request.POST, instance=obj)
         phone_form = PhoneForm(data=request.POST, instance=obj.phone_set.first())
-        if form.is_valid() and phone_form.is_valid():
+        email_form = EmailForm(data=request.POST, instance=obj.email_set.first())
+        if form.is_valid() and phone_form.is_valid() and email_form:
             contact = form.save()
             phone = phone_form.save()
+            email = email_form.save()
             return HttpResponseRedirect(reverse('info', kwargs={'pk': pk}))
         else:
             return render(request, 'address/update_contact.html', context={'form': form,
-                                                                           'phone_form': phone_form})
+                                                                           'phone_form': phone_form,
+                                                                           'email_form': email_form})
     else:
         form = CreateContactModelForm(instance=obj)
         phone_form = PhoneForm(instance=obj.phone_set.first())
+        email_form = EmailForm(instance=obj.email_set.first())
     return render(request, 'address/update_contact.html', context={'form': form,
-                                                                   'phone_form': phone_form})
+                                                                   'phone_form': phone_form,
+                                                                   'email_form': email_form})
 
 
