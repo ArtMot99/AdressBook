@@ -8,6 +8,7 @@ class Contact(models.Model):
     patronymic = models.CharField(max_length=20, verbose_name='Отчество')
     old = models.PositiveIntegerField(verbose_name='Возраст')
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    slug = models.SlugField(null=False, default='')
 
     class Meta:
         pass
