@@ -17,8 +17,12 @@
             <p class="card-text"><span class="text-success text-decoration-underline">Surname:</span> {{ contact.surname }}</p>
             <p class="card-text"><span class="text-success text-decoration-underline">Patronymic:</span> {{ contact.patronymic }}</p>
             <p class="card-text"><span class="text-success text-decoration-underline">Old:</span> {{ contact.old }} yo</p>
-            <p class="card-text">{{ contact.phone_set.all|join:',  '|default:'Nothing' }}</p>
-            <p class="card-text">{{ contact.email_set.all|join:',  '|default:'Nothing' }}</p>
+            {% for phone in contact.phone_set.all %}
+                <p class="card-text"><span class="text-success text-decoration-underline">Номер телефона:</span> {{ phone.phone_number }}</p>
+            {% endfor %}
+            {% for email in contact.email_set.all %}
+                <p class="card-text"><span class="text-success text-decoration-underline">Email:</span> {{ email.email_address }}</p>
+            {% endfor %}
         </div>
     </div>
 
