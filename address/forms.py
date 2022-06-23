@@ -25,8 +25,8 @@ class EmailForm(forms.ModelForm):
 ContactPhoneFormSet = inlineformset_factory(Contact, Phone,
                                             form=PhoneForm,
                                             can_delete=False,
-                                            extra=2)
+                                            extra=3)
 ContactEmailFormSet = inlineformset_factory(Contact, Email,
                                             form=EmailForm,
                                             can_delete=False,
-                                            extra=2)
+                                            extra=3,)
