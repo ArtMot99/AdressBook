@@ -3,9 +3,13 @@
             <div class="col-6 text-center">
                 <form class="form-text" action="" method="post">
                     {% csrf_token %}
+                    <h4 class="text-dark text-opacity-75">Ваши данные</h4>
                     {{ form.as_p }}
-                    {{ phone_form.as_p }}
-                    {{ email_form.as_p }}
+                    <h4 class="text-dark text-opacity-75"> Номера телефона</h4>
+                    {{ inlineformset.management_form.as_p }}
+                    {{ inlineformset.as_p }}
+                    <h4 class="text-dark text-opacity-75">Emails</h4>
+                    {{ inline.as_p }}
 
                     <button class="btn btn-success" type="submit">Create Contact</button>
                 </form>

@@ -23,7 +23,7 @@ class Contact(models.Model):
 
 
 class Phone(models.Model):
-    phone_number = models.CharField(max_length=12)
+    phone_number = models.CharField(max_length=12, verbose_name='Номер телефона')
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -31,7 +31,7 @@ class Phone(models.Model):
 
 
 class Email(models.Model):
-    email_address = models.EmailField(max_length=100)
+    email_address = models.EmailField(max_length=100, verbose_name='Email адрес')
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
 
     def __str__(self):

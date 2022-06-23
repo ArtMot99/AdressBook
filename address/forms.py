@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import inlineformset_factory
+
 from .models import Contact, Phone, Email
 
 
@@ -18,3 +20,13 @@ class EmailForm(forms.ModelForm):
     class Meta:
         model = Email
         fields = ['email_address']
+
+
+ContactPhoneFormSet = inlineformset_factory(Contact, Phone,
+                                            form=PhoneForm,
+                                            can_delete=False,
+                                            extra=2)
+ContactEmailFormSet = inlineformset_factory(Contact, Email,
+                                            form=EmailForm,
+                                            can_delete=False,
+                                            extra=2)

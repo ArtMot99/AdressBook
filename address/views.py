@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from .forms import CreateContactModelForm, PhoneForm, EmailForm
+from .forms import CreateContactModelForm, PhoneForm, EmailForm, ContactEmailFormSet, ContactPhoneFormSet
 from .models import Contact
 
 
@@ -24,33 +24,33 @@ def contact_view(request, pk):
         return render(request, 'address/info_about_contact.html', context)
 
 
-def create_contact_modelform_view(request, *args, **kwargs):
-    if request.method == 'POST':
-        form = CreateContactModelForm(request.POST)
-        phone_form = PhoneForm(request.POST)
-        email_form = EmailForm(request.POST)
-        if form.is_valid() and phone_form.is_valid() and email_form.is_valid():
-            contact = form.save(commit=False)
-            contact.user = request.user
-            contact.save()
-            phone = phone_form.save(commit=False)
-            phone.contact = contact
-            phone.save()
-            email = email_form.save(commit=False)
-            email.contact = contact
-            email.save()
-            return HttpResponseRedirect(reverse('main_menu'))
-        else:
-            return render(request, 'address/create_contact.html', context={'form': form,
-                                                                           'phone_form': phone_form,
-                                                                           'email_form': email_form})
-    else:
-        form = CreateContactModelForm()
-        phone_form = PhoneForm()
-        email_form = EmailForm()
-    return render(request, 'address/create_contact.html', context={'form': form,
-                                                                   'phone_form': phone_form,
-                                                                   'email_form': email_form})
+# def create_contact_modelform_view(request, *args, **kwargs):
+#     if request.method == 'POST':
+#         form = CreateContactModelForm(request.POST)
+#         phone_form = PhoneForm(request.POST)
+#         email_form = EmailForm(request.POST)
+#         if form.is_valid() and phone_form.is_valid() and email_form.is_valid():
+#             contact = form.save(commit=False)
+#             contact.user = request.user
+#             contact.save()
+#             phone = phone_form.save(commit=False)
+#             phone.contact = contact
+#             phone.save()
+#             email = email_form.save(commit=False)
+#             email.contact = contact
+#             email.save()
+#             return HttpResponseRedirect(reverse('main_menu'))
+#         else:
+#             return render(request, 'address/create_contact.html', context={'form': form,
+#                                                                            'phone_form': phone_form,
+#                                                                            'email_form': email_form})
+#     else:
+#         form = CreateContactModelForm()
+#         phone_form = PhoneForm()
+#         email_form = EmailForm()
+#     return render(request, 'address/create_contact.html', context={'form': form,
+#                                                                    'phone_form': phone_form,
+#                                                                    'email_form': email_form})
 
 
 def update_contact_modelform_view(request, pk, *args, **kwargs):
@@ -77,3 +77,28 @@ def update_contact_modelform_view(request, pk, *args, **kwargs):
                                                                    'email_form': email_form})
 
 
+def contact_create_inline_view(request):
+    if request.method == 'POST':
+        form = CreateContactModelForm(request.POST)
+        contact_phone = ContactPhoneFormSet(request.POST)
+        contact_email = ContactEmailFormSet(request.POST)
+        if form.is_valid() and contact_phone.is_valid() and contact_email.is_valid():
+            contact = form.save(commit=False)
+            contact.user = request.user
+            contact.save()
+            contact_phone.instance = contact
+            contact_phone.save()
+            contact_email.instance = contact
+            contact_email.save()
+            return HttpResponseRedirect(reverse('main_menu'))
+        else:
+            return render(request, 'address/create_contact.html', {'form': form,
+                                                                   'inlineformset': contact_phone,
+                                                                   'inline': contact_email})
+    else:
+        form = CreateContactModelForm()
+        contact_phone = ContactPhoneFormSet()
+        contact_email = ContactEmailFormSet()
+        return render(request, 'address/create_contact.html', {'form': form,
+                                                               'inlineformset': contact_phone,
+                                                               'inline': contact_email})
