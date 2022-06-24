@@ -4,7 +4,7 @@ from address import views
 
 contact_url = [
     path('', views.contact_view, name='info'),
-    path('update/', views.update_contact_modelform_view, name='update'),
+    path('update/', views.contact_update_inline_view, name='update'),
 ]
 
 

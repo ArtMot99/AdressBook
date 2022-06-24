@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from .forms import CreateContactModelForm, PhoneForm, EmailForm, ContactEmailFormSet, ContactPhoneFormSet
+from .forms import CreateContactModelForm, ContactEmailFormSet, \
+    ContactPhoneFormSet, ContactPhoneForUpdate, ContactEmailForUpdate
 from .models import Contact
 
 
@@ -24,12 +25,12 @@ def contact_view(request, pk):
         return render(request, 'address/info_about_contact.html', context)
 
 
-def update_contact_modelform_view(request, pk, *args, **kwargs):
+def contact_update_inline_view(request, pk):
     obj = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
         form = CreateContactModelForm(data=request.POST, instance=obj)
-        phone_form = PhoneForm(data=request.POST, instance=obj.phone_set.first())
-        email_form = EmailForm(data=request.POST, instance=obj.email_set.first())
+        phone_form = ContactPhoneForUpdate(data=request.POST, instance=obj)
+        email_form = ContactEmailForUpdate(data=request.POST, instance=obj)
         if form.is_valid() and phone_form.is_valid() and email_form:
             form.save()
             phone_form.save()
@@ -41,8 +42,8 @@ def update_contact_modelform_view(request, pk, *args, **kwargs):
                                                                            'email_form': email_form})
     else:
         form = CreateContactModelForm(instance=obj)
-        phone_form = PhoneForm(instance=obj.phone_set.first())
-        email_form = EmailForm(instance=obj.email_set.first())
+        phone_form = ContactPhoneForUpdate(instance=obj)
+        email_form = ContactEmailForUpdate(instance=obj)
     return render(request, 'address/update_contact.html', context={'form': form,
                                                                    'phone_form': phone_form,
                                                                    'email_form': email_form})
