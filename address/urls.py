@@ -10,6 +10,6 @@ contact_url = [
 
 urlpatterns = [
     path('', views.contact_list_view, name='main_menu'),
-    path('<int:pk>/', include(contact_url)),
     path('create/', views.contact_create_inline_view, name='create'),
+    path('<slug:slug>/', include(contact_url)),
 ]

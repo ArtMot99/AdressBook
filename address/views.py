@@ -13,8 +13,8 @@ def contact_list_view(request):
     return render(request, 'address/index.html', context)
 
 
-def contact_view(request, pk):
-    obj = get_object_or_404(Contact, pk=pk)
+def contact_view(request, slug):
+    obj = get_object_or_404(Contact, slug=slug)
     context = {
         'contact': obj,
     }
@@ -25,8 +25,8 @@ def contact_view(request, pk):
         return render(request, 'address/info_about_contact.html', context)
 
 
-def contact_update_inline_view(request, pk):
-    obj = get_object_or_404(Contact, pk=pk)
+def contact_update_inline_view(request, slug):
+    obj = get_object_or_404(Contact, slug=slug)
     if request.method == 'POST':
         form = CreateContactModelForm(data=request.POST, instance=obj)
         phone_form = ContactPhoneForUpdate(data=request.POST, instance=obj)
@@ -35,7 +35,7 @@ def contact_update_inline_view(request, pk):
             form.save()
             phone_form.save()
             email_form.save()
-            return HttpResponseRedirect(reverse('info', kwargs={'pk': pk}))
+            return HttpResponseRedirect(reverse('info', kwargs={'slug': slug}))
         else:
             return render(request, 'address/update_contact.html', context={'form': form,
                                                                            'phone_form': phone_form,
