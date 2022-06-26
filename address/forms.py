@@ -1,5 +1,7 @@
 from django import forms
-from django.forms import inlineformset_factory
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.forms import inlineformset_factory, PasswordInput
 
 from .models import Contact, Phone, Email
 
@@ -38,3 +40,19 @@ ContactEmailForUpdate = inlineformset_factory(Contact, Email,
                                               form=EmailForm,
                                               can_delete=True,
                                               extra=2)
+
+
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=PasswordInput)
+    password2 = forms.CharField(label='Repeat password', widget=PasswordInput)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'first_name')
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise ValidationError('Passwords don\'t match')
+        return cd['password2']
+
