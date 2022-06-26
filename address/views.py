@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .forms import CreateContactModelForm, ContactEmailFormSet, \
-    ContactPhoneFormSet, ContactPhoneForUpdate, ContactEmailForUpdate
+    ContactPhoneFormSet, ContactPhoneForUpdate, ContactEmailForUpdate, UserRegistrationForm
 from .models import Contact
 
 
@@ -74,3 +74,17 @@ def contact_create_inline_view(request):
         return render(request, 'address/create_contact.html', {'form': form,
                                                                'inlineformset': contact_phone,
                                                                'inline': contact_email})
+
+
+def registration_view(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            return HttpResponseRedirect(reverse('main_menu'))
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
