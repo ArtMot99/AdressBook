@@ -11,6 +11,6 @@
     {% if user.is_authenticated %}
         {% include 'includes/form_for_create.html' %}
     {% else %}
-        <p>Для создания контакта нужно зарегестрироватся или войти в аккаунт!</p>
+        <p class="text-center text-danger text-opacity-75">Для создания контакта нужно зарегестрироватся или войти в аккаунт!</p>
     {% endif %}
 {% endblock %}
