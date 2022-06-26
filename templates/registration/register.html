@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
 
+{% block title %}
+    Registartion
+{% endblock %}
+
+
 {% block content %}
-    <form action="" method="post">
+    {% include 'includes/navbar.html' %}
+    <form class="form-text" action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Create Account</button>
+        <button class="btn-outline-success" type="submit">Create Account</button>
     </form>
 {% endblock %}

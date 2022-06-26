@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 
+{% block title %}
+    Logout
+{% endblock %}
+
+
 {% block content %}
-    <a href="{% url 'main_menu' %}">На главную</a>
+    {% include 'includes/navbar.html' %}
+    <p class="text-center text-success">Вы вышли из аккаунта!</p>
 {% endblock %}
