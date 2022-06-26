@@ -12,4 +12,5 @@ urlpatterns = [
     path('', views.contact_list_view, name='main_menu'),
     path('create/', views.contact_create_inline_view, name='create'),
     path('<slug:slug>/', include(contact_url)),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

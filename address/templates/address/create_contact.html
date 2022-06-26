@@ -8,5 +8,10 @@
 
 {% block content %}
     {% include 'includes/navbar.html' %}
-    {% include 'includes/form_for_create.html' %}
+    {% if user.is_authenticated %}
+        {% include 'includes/form_for_create.html' %}
+    {% else %}
+        <p>Для создания контакта нужно зарегестрироватся или войти в аккаунт!</p>
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
 {% endblock %}

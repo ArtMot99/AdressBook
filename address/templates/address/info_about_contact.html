@@ -25,7 +25,7 @@
             {% endfor %}
         </div>
     </div>
-
+{% if user.is_authenticated %}
     <div>
         <a class="btn mb-3 btn-success btn-sm" role="button" style="width: 9rem" href="{% url 'update' slug=contact.slug %}">Update contact</a>
     </div>
@@ -36,5 +36,6 @@
             <button class="btn btn-danger btn-sm" type="submit" style="width: 9rem">Delete contact</button>
         </form>
     </div>
+{% endif %}
 
 {% endblock %}
