@@ -4,10 +4,10 @@
     {% else %}
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
-            <p><input type="text" name="username" placeholder="Username"></p>
-            <p><input type="password" name="password" placeholder="Password"></p>
-            <button type="submit">Login</button>
-            <button><a href="{% url 'registration' %}">Registration</a></button>
+            <p><input class="form-text" type="text" name="username" placeholder="Username"></p>
+            <p><input class="form-text" type="password" name="password" placeholder="Password"></p>
+            <button class="form-text" type="submit">Login</button>
+            <button class="form-text"><a href="{% url 'registration' %}">Registration</a></button>
         </form>
     {% endif %}
 
