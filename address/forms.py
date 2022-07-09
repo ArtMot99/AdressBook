@@ -11,11 +11,41 @@ class CreateContactModelForm(forms.ModelForm):
         model = Contact
         fields = ['name', 'surname', 'patronymic', 'old']
 
+    def clean_old(self):
+        new_old = self.cleaned_data['old']
+        if new_old < 18 or new_old > 100:
+            raise ValidationError('Old must be > 18 and < 100!')
+        return new_old
+
+    def clean_name(self):
+        new_name = self.cleaned_data['name']
+        if not new_name[0].isupper():
+            raise ValidationError('First letter in name must be upper!')
+        return new_name
+
+    def clean_surname(self):
+        new_surname = self.cleaned_data['surname']
+        if not new_surname[0].isupper():
+            raise ValidationError('First letter in surname must be upper!')
+        return new_surname
+
+    def clean_patronymic(self):
+        new_patro = self.cleaned_data['patronymic']
+        if not new_patro[0].isupper():
+            raise ValidationError('First letter in patronymic must be upper!')
+        return new_patro
+
 
 class PhoneForm(forms.ModelForm):
     class Meta:
         model = Phone
         fields = ['phone_number']
+
+    def clean_phone_number(self):
+        phone_num = self.cleaned_data['phone_number']
+        if not phone_num.isdigit() or len(phone_num) != 12:
+            raise ValidationError('Phone number must have only digits and must have 12 symbols')
+        return phone_num
 
 
 class EmailForm(forms.ModelForm):
