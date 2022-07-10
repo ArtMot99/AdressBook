@@ -2,9 +2,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView, DeleteView
+from django.views.generic.detail import SingleObjectMixin
+
 from .forms import CreateContactModelForm, ContactEmailFormSet, \
     ContactPhoneFormSet, ContactPhoneForUpdate, ContactEmailForUpdate, UserRegistrationForm
-from .models import Contact
+from .models import Contact, Comment
 
 
 # def contact_list_view(request):
@@ -98,9 +100,28 @@ class ContactListView(ListView):
     paginate_by = 10
 
 
-class ContactDetailView(DetailView):
-    model = Contact
+# class ContactDetailView(DetailView):
+#     model = Contact
+#     template_name = 'address/info_about_contact.html'
+
+
+class ContactDetailView(SingleObjectMixin, ListView):
+
+    model = Comment
     template_name = 'address/info_about_contact.html'
+    paginate_by = 2
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Contact.objects.all())
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['contact'] = self.object
+        return context
+
+    def get_queryset(self):
+        return self.object.comment_set.all()
 
 
 class CreateContactView(CreateView):
@@ -151,14 +172,15 @@ class UpdateContactView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        old_object = get_object_or_404(Contact, slug=slug)
+        # slug = self.kwargs['slug']
+        # old_object = get_object_or_404(Contact, slug=slug)
+        self.object = self.get_object(queryset=Contact.objects.all())
         if self.request.POST:
             contact_phone = ContactPhoneForUpdate(self.request.POST)
             contact_email = ContactEmailForUpdate(self.request.POST)
         else:
-            contact_phone = ContactPhoneForUpdate(instance=old_object)
-            contact_email = ContactEmailForUpdate(instance=old_object)
+            contact_phone = ContactPhoneForUpdate(instance=self.object)
+            contact_email = ContactEmailForUpdate(instance=self.object)
         context.update(
             {
                 'inlineformset': contact_phone,

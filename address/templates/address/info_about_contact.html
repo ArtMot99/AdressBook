@@ -33,7 +33,13 @@
     <div class="text-center">
         <a class="btn mb-3 btn-danger btn-sm" role="button" style="width: 9rem" href="{% url 'delete' slug=contact.slug %}">Delete contact</a>
     </div>
-
 {% endif %}
-
+{#    Коментарии   #}
+{% for comment in object_list %}
+    <h3>{{ comment.title }}</h3>
+    <p>{{ comment.content }}</p>
+    <p>{{ comment.author }}</p>
+    <p>{{ comment.update_at }}</p>
+{% endfor %}
+    {% include 'includes/paginate.html' %}
 {% endblock %}
