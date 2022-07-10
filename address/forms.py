@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory, PasswordInput
 
-from .models import Contact, Phone, Email
+from .models import Contact, Phone, Email, Comment
 
 
 class CreateContactModelForm(forms.ModelForm):
@@ -52,6 +52,12 @@ class EmailForm(forms.ModelForm):
     class Meta:
         model = Email
         fields = ['email_address']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['title', 'content']
 
 
 ContactPhoneFormSet = inlineformset_factory(Contact, Phone,
