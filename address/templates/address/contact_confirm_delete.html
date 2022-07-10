@@ -1,5 +1,0 @@
-<form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object.surname }} {{ object.name }}"?</p>
-    <input type="submit" value="Confirm">
-    <a href="{% url 'main_menu' %}">Come Back</a>
-</form>

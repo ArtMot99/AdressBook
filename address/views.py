@@ -187,7 +187,7 @@ class UpdateContactView(UpdateView):
 class DeleteContactView(DeleteView):
     model = Contact
     success_url = reverse_lazy('main_menu')
-    template_name = 'address/contact_confirm_delete.html'
+    template_name = 'address/contact_delete.html'
 
 
 class RegistrationView(FormView):
