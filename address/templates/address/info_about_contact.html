@@ -27,12 +27,17 @@
     </div>
 {% if user.is_authenticated %}
     <div class="text-center">
-        <a class="btn mb-3 btn-success btn-sm" role="button" style="width: 9rem" href="{% url 'update' slug=contact.slug %}">Update contact</a>
+        <a class="btn mb-3 btn-success btn-sm" role="button" style="width: 9rem" href="{% url 'update' slug=contact.slug %}">Обновить контакт</a>
     </div>
 
     <div class="text-center">
-        <a class="btn mb-3 btn-danger btn-sm" role="button" style="width: 9rem" href="{% url 'delete' slug=contact.slug %}">Delete contact</a>
+        <a class="btn mb-3 btn-secondary btn-sm" role="button" style="width: 9rem" href="{% url 'create_comment' slug=contact.slug %}">Оставить комментарий</a>
     </div>
+
+    <div class="text-center">
+        <a class="btn mb-3 btn-danger btn-sm" role="button" style="width: 9rem" href="{% url 'delete' slug=contact.slug %}">Удалить контакт</a>
+    </div>
+
 {% endif %}
 {#    Коментарии   #}
 {% for comment in object_list %}
