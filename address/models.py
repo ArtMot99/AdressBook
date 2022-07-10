@@ -40,3 +40,18 @@ class Email(models.Model):
 
     def __str__(self):
         return f'Email: {self.email_address} | Name: {self.contact}'
+
+
+class Comment(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField(null=True)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    update_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата изменения')
+
+    class Meta:
+        ordering = ('-create_at',)
+
+    def __str__(self):
+        return self.title
