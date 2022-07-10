@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Create comment{% endblock %}
+
+
+{% block content %}
+    {% include 'includes/navbar.html' %}
+    <div class="text-center">
+        <form class="form-text" action="" method="post">
+            {% csrf_token %}
+            <h4 class="text-dark text-opacity-75">Оставьте комментарий</h4>
+            {{ form.as_p }}
+
+            <button class="btn btn-success" type="submit" value="Confirm">Confirm</button>
+        </form>
+    </div>
+{% endblock %}
