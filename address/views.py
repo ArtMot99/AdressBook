@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, F
 from django.views.generic.detail import SingleObjectMixin
 
 from .forms import CreateContactModelForm, ContactEmailFormSet, \
-    ContactPhoneFormSet, ContactPhoneForUpdate, ContactEmailForUpdate, UserRegistrationForm
+    ContactPhoneFormSet, ContactPhoneForUpdate, ContactEmailForUpdate, UserRegistrationForm, CommentForm
 from .models import Contact, Comment
 
 
@@ -225,3 +225,11 @@ class RegistrationView(FormView):
             return HttpResponseRedirect(reverse('main_menu'))
         else:
             return self.form_invalid(form)
+
+
+class CreateComment(CreateView):
+    model = Comment
+    fields = '__all__'
+    template_name = 'address/form_for_comment.html'
+    success_url = '../../'
+
