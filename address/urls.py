@@ -6,6 +6,7 @@ contact_url = [
     path('', views.ContactDetailView.as_view(), name='info'),
     path('update/', views.UpdateContactView.as_view(), name='update'),
     path('delete/', views.DeleteContactView.as_view(), name='delete'),
+    path('comment/', views.CreateComment.as_view(), name='create_comment'),
 ]
 
 
