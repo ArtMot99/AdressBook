@@ -43,10 +43,10 @@ class Email(models.Model):
 
 
 class Comment(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField(null=True)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, verbose_name='Заголовок')
+    content = models.TextField(null=True, verbose_name='Комментарий')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Автор')
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, verbose_name='Для контакта')
     create_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     update_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата изменения')
 
