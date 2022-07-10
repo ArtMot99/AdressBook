@@ -31,11 +31,9 @@
     </div>
 
     <div>
-        <form action="" method="post">
-            {% csrf_token %}
-            <button class="btn btn-danger btn-sm" type="submit" style="width: 9rem">Delete contact</button>
-        </form>
+        <a class="btn mb-3 btn-danger btn-sm" role="button" style="width: 9rem" href="{% url 'delete' slug=contact.slug %}">Delete contact</a>
     </div>
+
 {% endif %}
 
 {% endblock %}

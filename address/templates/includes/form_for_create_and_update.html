@@ -6,13 +6,13 @@
                     <h4 class="text-dark text-opacity-75">Ваши данные</h4>
                     {{ form.as_p }}
                     <h4 class="text-dark text-opacity-75"> Номера телефона</h4>
-                    {{ phone_form.management_form.as_p }}
-                    {{ phone_form.as_p }}
+                    {{ inlineformset.management_form.as_p }}
+                    {{ inlineformset.as_p }}
                     <h4 class="text-dark text-opacity-75">Emails</h4>
-                    {{ email_form.management_form.as_p }}
-                    {{ email_form.as_p }}
+                    {{ inline.management_form.as_p }}
+                    {{ inline.as_p }}
 
-                    <button class="btn btn-success" type="submit">Update Contact</button>
+                    <button class="btn btn-success" type="submit" value="Confirm">Confirm</button>
                 </form>
             </div>
         </div>

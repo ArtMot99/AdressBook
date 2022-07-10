@@ -9,7 +9,7 @@
 {% block content %}
     {% include 'includes/navbar.html' %}
     {% if user.is_authenticated %}
-        {% include 'includes/form_for_create.html' %}
+        {% include 'includes/form_for_create_and_update.html' %}
     {% else %}
         <p class="text-center text-danger text-opacity-75">Для создания контакта нужно
             <a href="{% url 'registration' %}">зарегестрироватся</a> или <a href="{% url 'login' %}">войти</a> в аккаунт!</p>
