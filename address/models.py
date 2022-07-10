@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from slugify import slugify
 
 
@@ -20,6 +21,9 @@ class Contact(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.surname)
         super(Contact, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('info', args=[str(self.slug)])
 
 
 class Phone(models.Model):
