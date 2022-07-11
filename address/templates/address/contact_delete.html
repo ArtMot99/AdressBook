@@ -8,8 +8,8 @@
         <form method="post">
             {% csrf_token %}
             <h4>Вы действительно хотите удалить контакт: "<span class="text-danger">{{ object.surname }}</span> <span class="text-danger">{{ object.name }}</span>"?</h4><br>
-            <input class="btn mb-3 btn-success btn-sm" role="button" style="width: 7rem" type="submit" value="Confirm"><br>
-            <a class="btn mb-3 btn-secondary btn-sm" role="button" style="width: 7rem" href="{% url 'info' slug=contact.slug %}">Come Back</a>
+            <input class="btn mb-3 btn-success btn-sm" role="button" style="width: 7rem" type="submit" value="Подтвердить"><br>
+            <a class="btn mb-3 btn-secondary btn-sm" role="button" style="width: 7rem" href="{% url 'info' slug=contact.slug %}">Назад</a>
         </form>
     </div>
 {% endblock %}
