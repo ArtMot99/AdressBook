@@ -11,9 +11,10 @@ class Contact(models.Model):
     old = models.PositiveIntegerField(verbose_name='Возраст')
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     slug = models.SlugField(null=False, default='')
+    photo = models.ImageField('Фотография', upload_to='address/photos', default='', blank=True)
 
     class Meta:
-        pass
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
