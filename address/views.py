@@ -100,13 +100,7 @@ class ContactListView(ListView):
     paginate_by = 10
 
 
-# class ContactDetailView(DetailView):
-#     model = Contact
-#     template_name = 'address/info_about_contact.html'
-
-
 class ContactDetailView(SingleObjectMixin, ListView):
-
     model = Comment
     template_name = 'address/info_about_contact.html'
     paginate_by = 2
@@ -162,22 +156,18 @@ class CreateContactView(CreateView):
         return super().form_valid(form)
 
 
-# todo Отображает все, нельзя изменить.
-# Значение во вложенной форме не совпадает со значением в базовой форме ERROR!
 class UpdateContactView(UpdateView):
     template_name = 'address/update_contact.html'
     model = Contact
     form_class = CreateContactModelForm
+
     success_url = reverse_lazy('main_menu')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # slug = self.kwargs['slug']
-        # old_object = get_object_or_404(Contact, slug=slug)
-        self.object = self.get_object(queryset=Contact.objects.all())
         if self.request.POST:
-            contact_phone = ContactPhoneForUpdate(self.request.POST)
-            contact_email = ContactEmailForUpdate(self.request.POST)
+            contact_phone = ContactPhoneForUpdate(self.request.POST, instance=self.object)
+            contact_email = ContactEmailForUpdate(self.request.POST, instance=self.object)
         else:
             contact_phone = ContactPhoneForUpdate(instance=self.object)
             contact_email = ContactEmailForUpdate(instance=self.object)
@@ -191,12 +181,9 @@ class UpdateContactView(UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        contact_phone = ContactPhoneForUpdate(self.request.POST)
-        contact_email = ContactEmailForUpdate(self.request.POST)
+        contact_phone = ContactPhoneForUpdate(self.request.POST, instance=self.object)
+        contact_email = ContactEmailForUpdate(self.request.POST, instance=self.object)
         if contact_email.is_valid() and contact_phone.is_valid():
-            self.obj = form.save()
-            contact_email.instance = self.obj
-            contact_phone.instance = self.obj
             form.save()
             contact_email.save()
             contact_phone.save()
@@ -229,7 +216,16 @@ class RegistrationView(FormView):
 
 class CreateComment(CreateView):
     model = Comment
-    fields = '__all__'
+    form_class = CommentForm
     template_name = 'address/form_for_comment.html'
-    success_url = '../../'
 
+    def get_success_url(self):
+        return reverse_lazy('info', kwargs={'slug': self.kwargs['slug']})
+
+    def form_valid(self, form):
+        f = form.save(commit=False)
+        f.author = self.request.user
+        contact = get_object_or_404(Contact, slug=self.kwargs['slug'])
+        f.contact = contact
+        f.save()
+        return super().form_valid(form)
