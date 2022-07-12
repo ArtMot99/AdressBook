@@ -1,6 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView, DeleteView
 from django.views.generic.detail import SingleObjectMixin
 
@@ -156,12 +159,15 @@ class CreateContactView(CreateView):
         return super().form_valid(form)
 
 
+# todo [ UserPassesTestMixin ] можно дать права доступа с помощью миксина и метода (test_func)
 class UpdateContactView(UpdateView):
     template_name = 'address/update_contact.html'
     model = Contact
     form_class = CreateContactModelForm
-
     success_url = reverse_lazy('main_menu')
+
+    # def test_func(self):
+    #     return self.request.user.is_superuser
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

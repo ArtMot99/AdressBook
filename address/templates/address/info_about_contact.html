@@ -10,34 +10,43 @@
 {% block content %}
     {% include 'includes/navbar.html' %}
 
-    <div class="card bg-info mb-3 bg-opacity-25 text-center">
+    <div class="card bg-secondary mb-3 bg-opacity-25 text-center">
         <div class="card-header"><h4>Описание контакта</h4></div>
         <div class="card-body">
 {#        Добавлено вывод изображения в инфо о контакте#}
-            {% thumbnail contact.photo '200x300' crop='center' as im %}
-                <img src="{{ im.url }}" alt="Картинка контакта">
+            {% thumbnail contact.photo '300x350' crop='center' as im %}
+                <img class="float-start position-relative" src="{{ im.url }}" alt="Картинка контакта">
             {% endthumbnail %}
-            <p class="card-text"><span class="text-success text-decoration-underline">User:</span> {{ contact.user }}</p>
-            <p class="card-text"><span class="text-success text-decoration-underline">Name:</span> {{ contact.name }}</p>
-            <p class="card-text"><span class="text-success text-decoration-underline">Surname:</span> {{ contact.surname }}</p>
-            <p class="card-text"><span class="text-success text-decoration-underline">Patronymic:</span> {{ contact.patronymic }}</p>
-            <p class="card-text"><span class="text-success text-decoration-underline">Old:</span> {{ contact.old }} yo</p>
+{#            <p class="card-text"><span class="text-success text-decoration-underline">User:</span> {{ contact.user }}</p>#}
+            <p class="mb-3 card-text"><span class="text-success text-decoration-underline">Имя:</span> {{ contact.name }}</p>
+            <p class="mb-3 card-text"><span class="text-success text-decoration-underline">Фамилия:</span> {{ contact.surname }}</p>
+            <p class="mb-3 card-text"><span class="text-success text-decoration-underline">Отчество:</span> {{ contact.patronymic }}</p>
+            <p class="mb-3 card-text"><span class="text-success text-decoration-underline">Возраст:</span> {{ contact.old }} yo</p>
             {% for phone in contact.phone_set.all %}
-                <p class="card-text"><span class="text-success text-decoration-underline">Номер телефона:</span> {{ phone.phone_number }}</p>
+                <p class="mb-3 card-text"><span class="text-success text-decoration-underline">Номер телефона:</span> {{ phone.phone_number }}</p>
             {% endfor %}
             {% for email in contact.email_set.all %}
-                <p class="card-text"><span class="text-success text-decoration-underline">Email:</span> {{ email.email_address }}</p>
+                <p class="mb-3 card-text"><span class="text-success text-decoration-underline">Email:</span> {{ email.email_address }}</p>
             {% endfor %}
+        {% if user.is_authenticated %}
+            <div class="">
+                <a class="btn mb-3 btn-success btn-sm" role="button" style="width: 9rem" href="{% url 'update' slug=contact.slug %}">Обновить контакт</a>
+            </div>
+
+            <div class="">
+                <a class="btn mb-3 btn-danger btn-sm" role="button" style="width: 9rem" href="{% url 'delete' slug=contact.slug %}">Удалить контакт</a>
+            </div>
+        {% endif %}
         </div>
     </div>
     {#    Коментарии   #}
 {#    <h3 class="text-center mb-4">Комментарии</h3>#}
     <div class="card-header text-center mb-4"><h4>Комментарии</h4></div>
     {% for comment in object_list %}
-        <div class="border border-1 border-secondary m-2 w-100 h-25 text-center">
-            <h6>{{ comment.title }}</h6>
+        <div class="border bg-opacity-10 bg-secondary mb-4 m-2 w-100 h-25 text-center">
+            <h6 class="text-decoration-underline">{{ comment.title }}</h6>
             <p>{{ comment.content }}</p>
-            <p>{{ comment.author }}</p>
+{#            <p>{{ comment.author }}</p>#}
             <p>{{ comment.update_at }}</p>
         </div>
     {% endfor %}
@@ -50,15 +59,7 @@
 {% if user.is_authenticated %}
     <div class="text-center">
         <div class="">
-            <a class="btn mb-3 btn-success btn-sm" role="button" style="width: 9rem" href="{% url 'update' slug=contact.slug %}">Обновить контакт</a>
-        </div>
-
-        <div class="">
             <a class="btn mb-3 btn-secondary btn-sm" role="button" style="width: 9rem" href="{% url 'create_comment' slug=contact.slug %}">Оставить комментарий</a>
-        </div>
-
-        <div class="">
-            <a class="btn mb-3 btn-danger btn-sm" role="button" style="width: 9rem" href="{% url 'delete' slug=contact.slug %}">Удалить контакт</a>
         </div>
     </div>
 {% endif %}
