@@ -93,14 +93,32 @@ from .models import Contact, Comment
 #     return render(request, 'registration/register.html', {'form': form})
 
 
-class ContactListView(ListView):
-    # Указываем модель
+class AllContactListView(ListView):
     model = Contact
-    # Указываем используемый шаблон
     template_name = 'address/index.html'
-    # Имя при генерации шаблона, вместо object_list(общее имя для всех обьектов)
     context_object_name = 'contact'
     paginate_by = 10
+
+    def get_queryset(self):
+        qs = Contact.general_contacts.all()
+        return qs
+
+
+class OwnContactListView(LoginRequiredMixin, ListView):
+    model = Contact
+    template_name = 'address/index.html'
+    context_object_name = 'contact'
+    paginate_by = 10
+    login_url = reverse_lazy('login')
+
+    def get_queryset(self):
+        # 1 способ(используем менеджер)
+        # qs = self.request.user.contact_set.all()
+        # 2 способ(используем менеджер)
+        # qs = Contact.active_objects.get_queryset(self.request.user)
+        # 3 способ(переопределяем qs в managers)
+        qs = Contact.personal_contacts.personal_contacts(self.request.user)
+        return qs
 
 
 class ContactDetailView(SingleObjectMixin, ListView):
@@ -125,7 +143,7 @@ class CreateContactView(CreateView):
     model = Contact
     template_name = 'address/create_contact.html'
     form_class = CreateContactModelForm
-    success_url = reverse_lazy('main_menu')
+    success_url = reverse_lazy('personal_contacts')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -167,7 +185,7 @@ class UpdateContactView(UpdateView):
     success_url = reverse_lazy('main_menu')
 
     # def test_func(self):
-    #     return self.request.user.is_superuser
+    #     return self.request.user.is_staff
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
