@@ -11,7 +11,8 @@ contact_url = [
 
 
 urlpatterns = [
-    path('', views.ContactListView.as_view(), name='main_menu'),
+    path('', views.AllContactListView.as_view(), name='main_menu'),
+    path('personal_contacts/', views.OwnContactListView.as_view(), name='personal_contacts'),
     path('create/', views.CreateContactView.as_view(), name='create'),
     path('<slug:slug>/', include(contact_url)),
     path('accounts/register', views.RegistrationView.as_view(), name='registration'),
