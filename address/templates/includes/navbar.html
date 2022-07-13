@@ -1,9 +1,13 @@
 <nav class="navbar navbar-light navbar-expand shadow fw-light p-3 mb-3 rounded bg-dark bg-opacity-25 justify-content-center text-uppercase">
     <div class="navbar-nav">
-        <a class="nav-link " aria-current="page" href="{% url 'main_menu' %}">Список контактов</a>
+        {% if user.is_authenticated %}
+            <a class="nav-link " aria-current="page" href="{% url 'personal_contacts' %}">Мои контакты</a>
+        {% endif %}
+        <a class="nav-link " aria-current="page" href="{% url 'main_menu' %}">Общедоступные контакты</a>
         <a class="nav-link " href="{% url 'create' %}">Создать контакт</a>
         {% if user.is_authenticated %}
             <a class="nav-link " href="{% url 'logout' %}">Выйти</a>
+            <p class="m-lg-2"> Пользователь: <span class="text-success">{{ user }}</span></p>
         {% else %}
             <a class="nav-link " href='{% url 'login' %}'>Войти</a>
             <a class="nav-link " href='{% url 'registration' %}'>Регистрация</a>
