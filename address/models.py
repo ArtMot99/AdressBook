@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from slugify import slugify
+from address.managers import OwnContactQs, AllContactManager
 
 
 class Contact(models.Model):
@@ -9,9 +10,15 @@ class Contact(models.Model):
     surname = models.CharField(max_length=20, verbose_name='Фамилия')
     patronymic = models.CharField(max_length=20, verbose_name='Отчество')
     old = models.PositiveIntegerField(verbose_name='Возраст')
+    is_active = models.BooleanField(default=False, verbose_name='Общедоступный контакт')
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     slug = models.SlugField(null=False, default='')
     photo = models.ImageField('Фотография', upload_to='address/photos', default='', blank=True)
+
+    objects = models.Manager()
+    general_contacts = AllContactManager()
+    # для фильтрации
+    personal_contacts = OwnContactQs().as_manager()
 
     class Meta:
         ordering = ('name',)
