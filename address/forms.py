@@ -9,7 +9,7 @@ from .models import Contact, Phone, Email, Comment
 class CreateContactModelForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['name', 'surname', 'patronymic', 'old', 'photo']
+        fields = ['name', 'surname', 'patronymic', 'old', 'photo', 'is_active']
 
     def clean_old(self):
         new_old = self.cleaned_data['old']
