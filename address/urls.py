@@ -1,5 +1,6 @@
 from django.urls import path, include
 from address import views
+from django.conf import settings
 
 
 contact_url = [
@@ -18,3 +19,10 @@ urlpatterns = [
     path('accounts/register', views.RegistrationView.as_view(), name='registration'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
+
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
